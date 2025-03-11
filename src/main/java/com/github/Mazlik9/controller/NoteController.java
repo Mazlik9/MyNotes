@@ -4,6 +4,8 @@ import com.github.Mazlik9.model.Note;
 import com.github.Mazlik9.service.NoteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,9 @@ public class NoteController {
 
     // get all notes
     @GetMapping
-    public List<Note> getAllNotes() {
-        return noteService.getAllNotes();
+    public Page<Note> getAllNotes(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size) {
+        return noteService.getAllNotes(PageRequest.of(page, size));
     }
 
     // create note
@@ -42,5 +45,13 @@ public class NoteController {
     @DeleteMapping("/{id}")
     public void deleteNote(@PathVariable Long id) {
         noteService.deleteNote(id);
+    }
+
+    // search notes
+    @GetMapping("/search")
+    public Page<Note> searchNotes(@RequestParam String keyword,
+                                  @RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "10") int size) {
+        return noteService.searchNotes(keyword, PageRequest.of(page, size));
     }
 }

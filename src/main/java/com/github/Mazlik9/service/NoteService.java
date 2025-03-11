@@ -3,6 +3,8 @@ package com.github.Mazlik9.service;
 import com.github.Mazlik9.model.Note;
 import com.github.Mazlik9.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +15,8 @@ public class NoteService {
     private NoteRepository noteRepository;
 
     // get all notes
-    public List<Note> getAllNotes() {
-        return noteRepository.findAll();
+    public Page<Note> getAllNotes(Pageable pageable) {
+        return noteRepository.findAll(pageable);
     }
 
     // create note
@@ -38,5 +40,10 @@ public class NoteService {
     // delete note
     public void deleteNote(Long id) {
         noteRepository.deleteById(id);
+    }
+
+    // search with keywords
+    public Page<Note> searchNotes(String keyword, Pageable pageable) {
+        return noteRepository.findByTitleContaining(keyword, pageable);
     }
 }

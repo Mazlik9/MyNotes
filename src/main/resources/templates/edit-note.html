@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Note</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>Edit Note</h1>
+
+<div class="editor-container">
+    <div class="note-editor">
+
+        <!-- Окно редактирования заметки -->
+        <form id="noteForm" th:action="@{/notes/edit/{index}(index=${index})}" method="post" th:object="${note}">
+            <input type="hidden" name="content" id="hiddenContent">
+            <label for="title">Edit Title</label>
+            <input type="text" id="title" th:field="*{title}" placeholder="Title" required>
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+            <label for="noteContent">Edit Content</label>
+            <div id="noteContent" contenteditable="true" th:utext="${note.content}"></div>
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
+        </form>
+
+        <!-- Кнопки для форматирования текста -->
+        <div class="formatting-buttons">
+            <select class="ql-font-family">
+                <option value="Arial">Arial</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+            </select>
+            <select class="ql-font-size">
+                <option value="1">12px</option>
+                <option value="2">14px</option>
+                <option value="3">16px</option>
+                <option value="4">18px</option>
+                <option value="5">20px</option>
+                <option value="6">22px</option>
+                <option value="7">24px</option>
+            </select>
+            <button type="button" class="ql-bold"><img src="/img/bold-icon.png" alt="Bold"></button>
+            <button type="button" class="ql-italic"><img src="/img/italic-icon.png" alt="Italic"></button>
+            <button type="button" class="ql-underline"><img src="/img/underline-icon.png" alt="Underline"></button>
+        </div>
+    </div>
+
+    <!-- Кнопки действий -->
+    <div class="action-buttons">
+        <button type="submit" form="noteForm">
+            <img src="/img/save-icon.png" alt="Save">
+        </button>
+        <a href="/notes" onclick="return confirm('Are you sure you want to revert the changes?')">
+            <img src="/img/cancel-icon.png" alt="Cancel">
+        </a>
+        <form th:action="@{/notes/delete}" method="post" style="display:inline;" onsubmit="return confirmDelete()">
+            <input type="hidden" name="index" th:value="${index}">
+            <button type="submit" class="delete-button">
+                <img src="/img/trash-icon.png" alt="Delete">
+            </button>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/js/scripts.js}"></script>
+</body>
+</html>

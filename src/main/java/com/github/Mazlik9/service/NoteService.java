@@ -1,49 +1,66 @@
 package com.github.Mazlik9.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.Mazlik9.model.Note;
-import com.github.Mazlik9.repository.NoteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class NoteService {
-    @Autowired
-    private NoteRepository noteRepository;
 
-    // get all notes
-    public Page<Note> getAllNotes(Pageable pageable) {
-        return noteRepository.findAll(pageable);
+    private static final String FILE_PATH = "notes.json";
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    // Получение всех заметок
+    public List<Note> getNotes() {
+        try {
+            File file = new File(FILE_PATH);
+            if (!file.exists()) {
+                return new ArrayList<>();
+            }
+            return objectMapper.readValue(file, new TypeReference<List<Note>>() {});
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
-    // create note
-    public Note createNote(Note note) {
-        return noteRepository.save(note);
+    // Добавление заметки
+    public void addNote(Note note) {
+        List<Note> notes = getNotes();
+        notes.add(note);
+        saveNotes(notes);
     }
 
-    // get note on ID
-    public Note getNoteById(Long id) {
-        return noteRepository.findById(id).orElseThrow(() -> new RuntimeException("Заметка не найдена"));
+    // Сохранение заметок в файл
+    private void saveNotes(List<Note> notes) {
+        try {
+            objectMapper.writeValue(new File(FILE_PATH), notes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    // update note
-    public Note updateNote(Long id, Note updatedNote) {
-        Note note = noteRepository.findById(id).orElseThrow(() -> new RuntimeException("Заметка не найдена"));
-        note.setTitle(updatedNote.getTitle());
-        note.setContent(updatedNote.getContent());
-        return noteRepository.save(note);
+    // Удаление заметки
+    public void deleteNote(int index) {
+        List<Note> notes = getNotes();
+        if (index >= 0 && index < notes.size()) {
+            notes.remove(index);
+            saveNotes(notes);
+        }
     }
 
-    // delete note
-    public void deleteNote(Long id) {
-        noteRepository.deleteById(id);
-    }
-
-    // search with keywords
-    public Page<Note> searchNotes(String keyword, Pageable pageable) {
-        return noteRepository.findByTitleContaining(keyword, pageable);
+    // Обновление заметки
+    public void updateNote(int index, Note updatedNote) {
+        List<Note> notes = getNotes();
+        if (index >= 0 && index < notes.size()) {
+            notes.set(index, updatedNote);
+            saveNotes(notes);
+        }
     }
 }

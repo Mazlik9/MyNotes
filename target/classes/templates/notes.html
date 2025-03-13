@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Notes</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>Notes</h1>
+
+<div class="container">
+    <!-- Форма для добавления новой заметки -->
+    <div class="column form-column">
+        <form th:action="@{/notes}" method="post" th:object="${note}">
+            <input type="text" th:field="*{title}" placeholder="Title" required>
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+            <textarea id="noteContent" th:field="*{content}" placeholder="Content"></textarea>
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
+            <button type="submit">Add Note</button>
+        </form>
+    </div>
+
+    <!-- Список заметок -->
+    <div class="column notes-column">
+        <ul>
+            <li th:each="note, iterStat : ${notes}">
+                <h3 th:text="${note.title}"></h3>
+                <p th:utext="${note.content}"></p>
+                <div class="note-actions">
+                    <a th:href="@{/notes/edit/{index}(index=${iterStat.index})}">Edit</a>
+                    <form th:action="@{/notes/delete}" method="post" onsubmit="return confirmDelete()">
+                        <input type="hidden" name="index" th:value="${iterStat.index}">
+                        <button type="submit" class="delete-button">
+                            <img th:src="@{/img/trash-icon.png}" alt="Delete">
+                        </button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script th:src="@{/js/scripts.js}"></script>
+</body>
+</html>

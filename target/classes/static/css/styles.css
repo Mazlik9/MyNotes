@@ -1,0 +1,244 @@
+/* Основные стили для всего документа */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-top: 80px;
+    overflow-x: hidden;
+    background-color: #F9F6F2;
+    color: #695F5F;
+}
+
+/* Стили для заголовка */
+h1 {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #FFFAF0;
+    padding: 20px 10px;
+    border-bottom: 1px solid #D3D3D3;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+
+/* Контейнер для страниц */
+.container {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 0 20px;
+}
+
+.column {
+    flex: 1;
+}
+
+/* Стили для формы добавления заметок */
+.form-column {
+    width: 30%;
+    position: fixed;
+    top: 95px;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.form-column form {
+    width: 90%;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+/* Стили для полей ввода */
+input[type="text"],
+#noteContent {
+    display: block;
+    margin-bottom: 10px;
+    width: 450px;
+    padding: 8px;
+    border: 1px solid #D3D3D3;
+    background-color: #FFFAF0;
+    color: #695F5F;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Стили для кнопок */
+button {
+    padding: 10px 20px;
+    background-color: #BCAAA4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: #A28C88;
+}
+
+/* Стили для списка заметок */
+.notes-column {
+    padding-left: 10px;
+    width: 67%;
+    margin-left: 33%;
+    padding-right: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.notes-column ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.notes-column li {
+    background-color: #FFFAF0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #D3D3D3;
+    border-radius: 8px;
+}
+
+/* Стили для текстовой области в списке заметок */
+.notes-column textarea {
+    height: 250px;
+    resize: none;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #D3D3D3;
+    background-color: #FFFAF0;
+    color: #695F5F;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Стили для кнопок форматирования */
+.formatting-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    flex-shrink: 0;
+    margin-top: 80px;
+}
+
+.formatting-buttons select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #E0D6D6;
+    background-color: #FFFAF0;
+    border-radius: 4px;
+    cursor: pointer;
+    appearance: none;
+    text-align: center;
+}
+
+.formatting-buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    border: 1px solid #E0D6D6;
+    background-color: #FFFAF0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.formatting-buttons img {
+    width: 16px;
+    height: 16px;
+}
+
+/* Стили для кнопок действий */
+.note-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.note-actions a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    background-color: #BCAAA4;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.note-actions a:hover {
+    background-color: #A28C88;
+}
+
+.note-actions .delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.note-actions .delete-button img {
+    width: 16px;
+    height: 16px;
+}
+
+.delete-button {
+    margin-top: 10px;
+    margin-left: 220px;
+}
+
+/* Стили для страницы редактирования заметки */
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.note-editor {
+    display: flex;
+    gap: 20px;
+    width: 30%;
+}
+
+.note-editor form {
+    flex: 1;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-top: 0;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.action-buttons button,
+.action-buttons a {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.action-buttons img {
+    width: 24px;
+    height: 24px;
+}
+
+#noteContent {
+    border: 1px solid #E0D6D6;
+    padding: 8px;
+    border-radius: 8px;
+    min-height: 360px;
+    max-height: 120px;
+    overflow-y: auto;
+    background-color: #FFFAF0;
+    color: #695F5F;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    resize: none;
+}

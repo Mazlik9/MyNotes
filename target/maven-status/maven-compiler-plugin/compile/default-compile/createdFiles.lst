@@ -1,0 +1,5 @@
+com\github\Mazlik9\service\NoteService.class
+com\github\Mazlik9\controller\NoteController.class
+com\github\Mazlik9\NotesApp.class
+com\github\Mazlik9\service\NoteService$1.class
+com\github\Mazlik9\model\Note.class

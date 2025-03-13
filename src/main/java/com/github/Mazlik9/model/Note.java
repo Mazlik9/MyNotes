@@ -1,21 +1,61 @@
 package com.github.Mazlik9.model;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.Data;
 
-@Data
-@Entity
 public class Note {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotBlank(message = "Заголовок не может быть пустым")
-    @Size(max = 100, message = "Заголовок не может быть длиннее 100 символов")
+    @NotBlank(message = "Title is required")
     private String title;
 
-    @NotBlank(message = "Содержание не может быть пустым")
+    @NotBlank(message = "Content is required")
     private String content;
+
+    public Note() {
+    }
+
+    public Note(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Note note = (Note) o;
+
+        if (title != null ? !title.equals(note.title) : note.title != null) return false;
+        return content != null ? content.equals(note.content) : note.content == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        return result;
+    }
 }
